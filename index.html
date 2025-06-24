@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vistoria de Obras</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root {
+      --cor-primaria: #006633;
+      --cor-secundaria: #ffd700;
+      --cor-fundo: #f0f8ff;
+      --cor-texto: #000;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      max-height: 80px;
+    }
+    header h1 {
+      margin: 10px 0 0 0;
+      color: var(--cor-primaria);
+    }
+    header h2 {
+      margin: 5px 0;
+      font-weight: normal;
+      font-size: 1.1rem;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: var(--cor-primaria);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d26;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="brasao-presidente-getulio.png" alt="Brasão de Presidente Getúlio">
+    <h1>Prefeitura Municipal de Presidente Getúlio</h1>
+    <h2>Formulário de Vistoria de Obras</h2>
+  </header>
+  <form id="vistoriaForm" enctype="multipart/form-data">
+    <label for="nome_obra">Nome da Obra:</label>
+    <input type="text" id="nome_obra" name="nome_obra" required />
+
+    <label for="localizacao">Localização:</label>
+    <input type="text" id="localizacao" name="localizacao" required />
+
+    <label for="numero_contrato">Número do Contrato:</label>
+    <input type="text" id="numero_contrato" name="numero_contrato" required />
+
+    <label for="empresa_responsavel">Empresa Responsável:</label>
+    <input type="text" id="empresa_responsavel" name="empresa_responsavel" required />
+
+    <label for="engenheiro_responsavel">Engenheiro Responsável:</label>
+    <input type="text" id="engenheiro_responsavel" name="engenheiro_responsavel" />
+
+    <label for="fiscal_prefeitura">Fiscal da Prefeitura:</label>
+    <input type="text" id="fiscal_prefeitura" name="fiscal_prefeitura" required />
+
+    <label for="data_vistoria">Data da Vistoria:</label>
+    <input type="date" id="data_vistoria" name="data_vistoria" required />
+
+    <label for="hora">Hora:</label>
+    <input type="time" id="hora" name="hora" required />
+
+    <label for="objetivo">Objetivo da Vistoria:</label>
+    <textarea id="objetivo" name="objetivo" required></textarea>
+
+    <label for="descricao_atividades">Descrição das Atividades:</label>
+    <textarea id="descricao_atividades" name="descricao_atividades"></textarea>
+
+    <label for="situacao">Situação da Obra:</label>
+    <select id="situacao" name="situacao">
+      <option value="Regular">Regular</option>
+      <option value="Irregular">Irregular</option>
+      <option value="Paralisada">Paralisada</option>
+    </select>
+
+    <label for="recomendacoes">Recomendações:</label>
+    <textarea id="recomendacoes" name="recomendacoes"></textarea>
+
+    <label for="fotos">Fotos (máximo 3):</label>
+    <input type="file" id="fotos" name="fotos" multiple accept="image/*" />
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('vistoriaForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch('/api/vistoria', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      alert(result.message);
+      form.reset();
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+</body>
+</html>
