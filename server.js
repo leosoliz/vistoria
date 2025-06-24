@@ -20,10 +20,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'prefeitura',
+  host: 'mysql.leosoliz.com',
+  user: 'vistoria_obras',
+  password: 'inca@2019',
+  database: 'vistoria_obras',
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
